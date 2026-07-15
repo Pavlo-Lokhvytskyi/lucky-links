@@ -12,7 +12,7 @@ Laravel 12, PHP 8.2, MySQL 8.
 
 ```bash
 cp .env.example .env
-docker compose up --build
+docker compose up -d --build
 ```
 
 На старті контейнер встановлює залежності, генерує ключ застосунку і виконує міграції. Щойно в
