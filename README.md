@@ -1,42 +1,42 @@
 # Lucky Links
 
-Реєстрація за іменем і номером телефону. Кожен користувач отримує унікальне посилання на приватну
-сторінку (сторінка А), яке діє 7 днів. На ній можна зіграти в «Imfeelinglucky», переглянути останні
-3 результати, перегенерувати посилання або деактивувати його.
+Registration by name and phone number. Each user gets a unique link to a private page (page A) that
+is valid for 7 days. There you can play "Imfeelinglucky", view the last 3 results, regenerate the
+link, or deactivate it.
 
 Laravel 12, PHP 8.2, MySQL 8.
 
-## Запуск
+## Running
 
-Потрібен лише Docker.
+Only Docker is required.
 
 ```bash
 cp .env.example .env
 docker compose up -d --build
 ```
 
-На старті контейнер встановлює залежності, генерує ключ застосунку і виконує міграції. Щойно в
-логах зʼявиться `Server running on [http://0.0.0.0:8000]`, відкривайте <http://localhost:8000>.
+On startup the container installs dependencies, generates the application key, and runs the
+migrations. As soon as `Server running on [http://0.0.0.0:8000]` shows up in the logs, open
+<http://localhost:8000>.
 
-## Тести
+## Tests
 
 ```bash
 docker compose exec app php artisan test
 ```
 
-Тести працюють на SQLite в памʼяті, тож запущений MySQL їм не потрібен.
+The tests run on in-memory SQLite, so they don't need a running MySQL.
 
-## Як це влаштовано
+## How it works
 
-* `POST /register` створює користувача, видає посилання і одразу редіректить на нього.
-* Посилання містить випадковий токен на 40 символів і `expires_at` через 7 днів (значення
-  налаштовується через `ACCESS_LINK_TTL_DAYS` у `.env`). Middleware `EnsureLinkIsActive` віддає
-  `410 Gone` для протермінованого чи деактивованого посилання і захищає **всі** дії сторінки А, а не
-  лише саму сторінку.
-* Перегенерація спершу гасить поточне посилання, а вже потім видає нове, тож витеклий токен не
-  переживає своєї заміни. Історія розіграшів належить користувачеві, тому перегенерація її не стирає.
-* `App\Domain\Game\DrawOutcome` містить правила гри і більше нічого: парне число — Win, а виплата
-  становить 70/50/30/10% від числа залежно від його діапазону. Число генерується на сервері, і
-  результат виводиться з нього, тож клієнт не може вплинути на розіграш.
-* Виплати зберігаються цілими числами в центах: виплата в `number * percent%` одиниць — це рівно
-  `number * percent` центів, тому похибка округлення не може дістатися до грошей.
+* `POST /register` creates the user, issues a link, and immediately redirects to it.
+* The link contains a random 40-character token and an `expires_at` 7 days out (configurable via
+  `ACCESS_LINK_TTL_DAYS` in `.env`). The `EnsureLinkIsActive` middleware returns `410 Gone` for an
+  expired or deactivated link and guards **every** action on page A, not just the page itself.
+* Regeneration first kills the current link and only then issues a new one, so a leaked token does
+  not outlive its replacement. Draw history belongs to the user, so regeneration does not wipe it.
+* `App\Domain\Game\DrawOutcome` holds the game rules and nothing else: an even number is a Win, and
+  the payout is 70/50/30/10% of the number depending on its range. The number is generated on the
+  server and the result is derived from it, so the client cannot influence the draw.
+* Payouts are stored as integers in cents: a payout of `number * percent%` units is exactly
+  `number * percent` cents, so rounding error can never reach the money.
