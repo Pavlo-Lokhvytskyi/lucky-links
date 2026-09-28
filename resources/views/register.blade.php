@@ -4,26 +4,28 @@
 
 @section('content')
     @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <div class="alert alert--error">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
 
-        <p>
-            <label for="username">Username</label><br>
+        <div class="field">
+            <label for="username">Username</label>
             <input id="username" type="text" name="username" value="{{ old('username') }}" required>
-        </p>
+        </div>
 
-        <p>
-            <label for="phone_number">Phonenumber</label><br>
-            <input id="phone_number" type="text" name="phone_number" value="{{ old('phone_number') }}" required>
-        </p>
+        <div class="field">
+            <label for="phone_number">Phone number</label>
+            <input id="phone_number" type="tel" name="phone_number" value="{{ old('phone_number') }}" required>
+        </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" class="btn btn--primary">Get my lucky link</button>
     </form>
 @endsection
