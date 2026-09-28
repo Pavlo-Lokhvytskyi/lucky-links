@@ -229,6 +229,52 @@ body {
     color: var(--color-lose);
 }
 
+.badge--progress {
+    background: rgba(245, 185, 66, 0.18);
+    color: var(--color-accent);
+}
+
+h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin: 22px 0 12px;
+}
+
+h3:first-child {
+    margin-top: 0;
+}
+
+.achievement {
+    background: #150e2b;
+    border: 1px solid var(--color-card-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+}
+
+.achievement__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.progress-track {
+    background: #0e0a22;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+}
+
 .result__payout {
     margin: 8px 0 0;
     color: var(--color-muted);
