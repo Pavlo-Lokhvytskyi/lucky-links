@@ -4,9 +4,9 @@
 
 @section('content')
     @if ($draws->isEmpty())
-        <p>No draws yet.</p>
+        <p class="empty">No draws yet.</p>
     @else
-        <table border="1">
+        <table>
             <tr>
                 <th>Number</th>
                 <th>Result</th>
@@ -16,7 +16,11 @@
             @foreach ($draws as $draw)
                 <tr>
                     <td>{{ $draw->number }}</td>
-                    <td>{{ $draw->is_win ? 'Win' : 'Lose' }}</td>
+                    <td>
+                        <span class="badge {{ $draw->is_win ? 'badge--win' : 'badge--lose' }}">
+                            {{ $draw->is_win ? 'Win' : 'Lose' }}
+                        </span>
+                    </td>
                     <td>{{ $draw->payout() }}</td>
                     <td>{{ $draw->created_at->toDateTimeString() }}</td>
                 </tr>
@@ -24,5 +28,5 @@
         </table>
     @endif
 
-    <p><a href="{{ $link->url() }}">Back</a></p>
+    <a class="back-link" href="{{ $link->url() }}">&larr; Back</a>
 @endsection
