@@ -29,6 +29,10 @@
         <button type="submit" class="btn btn--secondary">View history</button>
     </form>
 
+    <form method="GET" action="{{ route('play.achievements', $link->token) }}">
+        <button type="submit" class="btn btn--secondary">🏆 Achievements</button>
+    </form>
+
     <hr class="divider">
 
     <form method="POST" action="{{ route('play.regenerate', $link->token) }}">

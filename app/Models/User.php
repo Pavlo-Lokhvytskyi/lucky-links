@@ -25,4 +25,10 @@ class User extends Model
     {
         return $this->hasMany(Draw::class);
     }
+
+    /** @return HasMany<Achievement, $this> */
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }

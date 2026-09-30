@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\PlayController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Middleware\EnsureLinkIsActive;
@@ -16,6 +17,7 @@ Route::middleware(EnsureLinkIsActive::class)
     ->group(function (): void {
         Route::get('/', [PlayController::class, 'show'])->name('show');
         Route::get('/history', [PlayController::class, 'history'])->name('history');
+        Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
         Route::post('/lucky', [PlayController::class, 'lucky'])->name('lucky');
         Route::post('/regenerate', [PlayController::class, 'regenerate'])->name('regenerate');
         Route::post('/deactivate', [PlayController::class, 'deactivate'])->name('deactivate');
